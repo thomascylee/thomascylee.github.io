@@ -97,11 +97,11 @@ section {
     background-repeat: no-repeat;
     height: inherit;
     display: flex;
-    opacity: 0.85;
+    opacity: 0.6;
 }
 
 .header-content{
-    margin: auto;
+    margin: 70vh auto;
 }
 
 .header-content h1{
@@ -146,25 +146,21 @@ section {
 }
 
 .animation-box{
-    animation-name: wiggle;
-    animation-duration: 1.5s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: normal;
+    animation: wiggle 1.5s linear infinite;
     margin: auto;
 }
 
 @keyframes wiggle {
 	0% {
-		padding-top: 10px;
+		padding-top: 0px;
 	}
 
 	50% {
-		padding-top: 30px;
+		padding-top: 15px;
 	}
 
 	100% {
-		padding-top: 10px;
+		padding-top: 0px;
 	}
 }
 
@@ -474,6 +470,16 @@ section {
 
     .navbar-text p, p{
         font-size: 14px;
+    }
+
+    .arrow-box{
+        right: 1%;
+        height: 40px;
+        width: 55px;
+    }
+
+    .arrow-box .fa-2x {
+        font-size: 1em; 
     }
     
 }
