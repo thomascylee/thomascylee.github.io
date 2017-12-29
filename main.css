@@ -173,8 +173,8 @@ section {
 #work .container::before{
     content: '';
     position: absolute;
-    top: 220px;
-    bottom: 19%;
+    top: 215px;
+    bottom: 21%;
     left: 50%;
     transform: translateX(-50%);
     width: 2px;
