@@ -1,65 +1,105 @@
-// Navbar Icon 
-
 $(document).ready(function(){
-    $('#menu').click(function(){
-        $('.navbar-menu').toggleClass('active');
+    // Navigation Bar collapse in mobile
+    $('#navbarNav').click(function(){
+        $('#navbarNav').collapse('hide')
+    });
+
+
+    // Smooth transition among sections
+    $('.animation-box').click(function(e){
+        e.preventDefault();
+        $("html, body").animate({
+            scrollTop: $('#expertise').offset().top
+        },'slow');
     })
+
+    // Using arrow down button to transit to 'Expertise' section
+    $("nav").find("a").click(function(e) {
+        e.preventDefault();
+        var section = $(this).attr("href");
+        $("html, body").animate({
+            scrollTop: $(section).offset().top
+        },'slow');
+    });
+
+    // Work experience animation with tracing function
+    $(window).on('scroll', function(){
+        $('.experience-item').each(function(){
+            if( $(this).offset().top <= $(window).scrollTop()+$(window).height()* 0.65 && $(this).hasClass('is-hidden') ) {
+                $(this).removeClass('is-hidden');
+                $(this).find('.experience-content').addClass('transition-in');
+                $(this).find('.circle-list').addClass('bounce-in');
+                
+            }
+
+            if( $(this).offset().top <= $(window).scrollTop()+$(window).height()* 0.65){
+                $('.experience-item').find('.circle-list').css('background','pink');
+                $(this).find('.circle-list').css('background','#F23D90');
+            }
+
+            if( $(this).offset().top <= $(window).scrollTop()+$(window).height()*0.4){
+                $('.experience-content').removeClass('tracing');
+                $(this).find('.experience-content').addClass('tracing');
+            }
+        });
+
+        // Different tracing in mobile version
+        if ($('.experience-item').offset().top > $(window).scrollTop()+$(window).height()){
+            $('.experience-item').addClass('is-hidden');
+            $('.experience-item').find('.experience-content').removeClass('transition-in');
+            $('.experience-item').find('.circle-list').removeClass('bounce-in');
+        }
+    });
+
+    // Fadein animation for section 'Expertise'
+    $(window).on('scroll',function(){
+        $('.icon-box').each(function(){
+            if ($(this).offset().top <= $(window).scrollTop() + $(window).height() * 0.9)
+                $(this).removeClass('is-hidden').addClass('fadein');
+        })
+    })
+
+    typingEffect();
 })
 
-$(document).ready(function(){
-    $('.navbar-menu li').click(function(){
-        $('.navbar-menu').toggleClass('active');
-    })
-})
+// typing and deleting effect
+const words = ["I love Innovation.", "I'm Web Developer.", "I do Business Development."];
+let i = 0;
+let timer;
 
+function typingEffect() {
+	let word = words[i].split("");
+	function loopTyping() {
+		if (word.length > 0) {
+			document.getElementById('word').innerHTML += word.shift();
+		} else {
+			clearTimeout(timer);
+			deletingEffect();
+			return false;
+		};
+		timer = setTimeout(loopTyping, 300);
+	};
+	loopTyping();
+};
 
-// Photo Album with Pagination 
-var slideIndex = 1;
-
-$(document).ready(function() {
-    $('.album .next-arrow').click(function() {
-        if (slideIndex < $('.album img').length){
-            slideIndex++;
-            $('.album img').hide();
-            $('.album img').eq(slideIndex-1).show();
-            $('.pagination li').removeClass('active');
-            $('.pagination li').eq(slideIndex-1).addClass('active');
-            $('.album .previous-arrow').show();
-        }
-
-        if (slideIndex == $('.album img').length) {$('.album .previous-arrow').show() && $('.album .next-arrow').hide()}
-        else {$('.album .previous-arrow').show() && $('.album .next-arrow').show()}
-    });
-});
-
-$(document).ready(function() {
-    $('.album .previous-arrow').click(function() {
-        if (slideIndex > 1){
-            slideIndex--;
-            $('.album img').hide();
-            $('.album img').eq(slideIndex-1).show();
-            $('.pagination li').removeClass('active');
-            $('.pagination li').eq(slideIndex-1).addClass('active');
-        }
-
-        if (slideIndex == 1) {$('.album .previous-arrow').hide() && $('.album .next-arrow').show()}
-        else {$('.album .previous-arrow').show() && $('.album .next-arrow').show()}
-    });
-});
-
-$(document).ready(function() {
-    $('.pagination li').click(function() {
-        slideIndex = $(this).index() + 1;
-
-        $('.album img').hide();
-        $('.album img').eq(slideIndex-1).show();
-
-        $('.pagination li').removeClass('active');
-        $('.pagination li').eq(slideIndex-1).addClass('active');
-
-        if (slideIndex == 1) {$('.album .previous-arrow').hide() && $('.album .next-arrow').show()}
-        else if (slideIndex == $('.album img').length) {$('.album .previous-arrow').show() && $('.album .next-arrow').hide()}
-        else {$('.album .previous-arrow').show() && $('.album .next-arrow').show()}
-    });
-});
+function deletingEffect() {
+	let word = words[i].split("");
+	function loopDeleting() {
+		if (word.length > 0) {
+			word.pop();
+			document.getElementById('word').innerHTML = word.join("");
+		} else {
+			if (words.length > (i + 1)) {
+				i++;
+			} else {
+				i = 0;
+			};
+			clearTimeout(timer);
+			typingEffect();
+			return false;
+		};
+		timer = setTimeout(loopDeleting, 50);
+	};
+	loopDeleting();
+};
 
